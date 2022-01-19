@@ -14,4 +14,4 @@ def min_max(dicti, time):
         return min_max(dict(list(sorted_by_time.items())[:(len(sorted_by_time) // 2)]), False)
     else:
         sorted_by_length = {k: v for k, v in sorted(dicti.items(), key=lambda item: item[1][1])}
-        return min_max(dict(list(sorted_by_length.items())[:(len(sorted_by_length) // 2)]), True)
+        return min_max(dict(list(sorted_by_length.items())[(len(sorted_by_length) // 2):]), True)

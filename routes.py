@@ -4,7 +4,7 @@ import osmnx as ox
 def find_possible_distances_and_times_of_routes(graph_area, origin_coordinates, destination_coordinates,
                                                 traffic_jam, amount_of_paths=5):
 
-    # Create the graph of the area from OSM data. It will download the data and create the graph
+    print("Creating the graph of the area from OSM data.")
     G = ox.graph_from_place(graph_area, network_type='drive', simplify=False)
 
     # OSM data are sometime incomplete so we use the speed module of osmnx to add missing edge speeds and travel times
@@ -17,18 +17,19 @@ def find_possible_distances_and_times_of_routes(graph_area, origin_coordinates, 
     # Load the graph
     G = ox.load_graphml(graph_area.split(',')[0]+".graphml")
 
-    # Plot the graph
+    print("Plotting the graph.")
     # fig, ax = ox.plot_graph(G, figsize=(10, 10), node_size=0, edge_color='y', edge_linewidth=0.2)
 
     # In the graph, get the nodes closest to the points
     origin_node = ox.get_nearest_node(G, origin_coordinates)
     destination_node = ox.get_nearest_node(G, destination_coordinates)
 
-    # Get the shortest routes by distance
+    print("Getting the shortest routes by distance.")
     shortest_routes_by_distance = list(ox.k_shortest_paths(G, origin_node, destination_node, amount_of_paths))
 
     routes_lengths = []
     routes_times = []
+    print("Counting routes lengths and times.")
     for route in shortest_routes_by_distance:
         route_length = 0
         route_time = 0
@@ -45,7 +46,3 @@ def find_possible_distances_and_times_of_routes(graph_area, origin_coordinates, 
         routes_times.append(route_time)
 
     return routes_lengths, routes_times, shortest_routes_by_distance, G
-
-
-
-    # fig, ax = ox.plot_graph_routes(G, shortest_routes_by_distance, route_colors=lst, route_linewidth=2, node_size=0)

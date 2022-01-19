@@ -13,8 +13,8 @@ def main():
     graph_area = "Lviv"
 
     # Two pairs of (lat,lng) coordinates
-    origin_coordinates = (49.787230, 24.014930)  # (49.801894, 24.018080)
-    destination_coordinates = (49.810929, 24.019537)  # (49.801880, 23.997494)
+    origin_coordinates = (49.801894, 24.018080)
+    destination_coordinates = (49.801880, 23.997494)
 
     # List of streets with traffic jams
     traffic_jam = ['Стрийська вулиця', 'Княгині Ольги вулиця']
@@ -35,7 +35,7 @@ def main():
     dicti = {count_cost(times_m[i], lengths_km[i]): [times_m[i], lengths_km[i], i] for i in range(amount_of_paths)}
 
     first_proposal = list(dicti.keys())[0]
-    first_time_and_length = dicti[first_proposal]
+    first_time_and_length = dicti.pop(first_proposal)
 
     min_time = min_max(dicti, True)
     max_length = min_max(dicti, False)
@@ -57,6 +57,7 @@ def main():
         fig, ax = ox.plot_graph_routes(graph, [routes[0], routes[max_length[res_max_length][2]]],
                                        route_colors=['r', 'b'], route_linewidth=3, node_size=0)
 
+    print("end")
 
 
 if __name__ == "__main__":
